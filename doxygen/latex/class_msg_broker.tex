@@ -1,0 +1,372 @@
+\hypertarget{class_msg_broker}{\section{Msg\-Broker Class Reference}
+\label{class_msg_broker}\index{Msg\-Broker@{Msg\-Broker}}
+}
+
+
+This class provides publish/subscription infrastructure as interprocess communication mechanism. Topics are the exchanged data structures which by one side will be ready to be subscribed to, or updated by publish functions. It is a thread safe implementation, so it can be used in baremetal or R\-T\-O\-S-\/based applications. If a mutex is required on R\-T\-O\-S-\/based applications, def macro M\-U\-T\-E\-X\-\_\-\-L\-O\-C\-K and M\-U\-T\-E\-X\-\_\-\-U\-N\-L\-O\-C\-K can be adapted according with your needs.  
+
+
+
+
+{\ttfamily \#include $<$Msg\-Broker.\-h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_msg_broker_1_1_observer}{Observer}
+\begin{DoxyCompactList}\small\item\em \hyperlink{struct_msg_broker_1_1_observer}{Observer} structure is formed by a handler and a notification callback. Subscriber objects attached to topic updates, will be registered in the \hyperlink{class_msg_broker}{Msg\-Broker} as \hyperlink{struct_msg_broker_1_1_observer}{Observer} structures. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_msg_broker_1_1_topic}{Topic}
+\begin{DoxyCompactList}\small\item\em Is the topic structure, formed by a list of observers, a topic name, pointer to the latest data update, data size and count of notification consumption. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9c}{Exception} \{ \\*
+\hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9cab742e8ffb9ad14f8c6fd47cfac899141}{N\-O\-\_\-\-E\-R\-R\-O\-R\-S} = 0, 
+\hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9caad59920430adf0bb0f7c95bf51475e23}{N\-U\-L\-L\-\_\-\-P\-O\-I\-N\-T\-E\-R}, 
+\hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9ca9d72afd7b38e8e78cc687b28196a32e2}{D\-E\-I\-N\-I\-T}, 
+\hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9cac4968b9c0c7222025799479d3580ed88}{O\-U\-T\-\_\-\-O\-F\-\_\-\-M\-E\-M\-O\-R\-Y}, 
+\\*
+\hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9cad12f9a8ddb13dddb8cf7b99e9f6777da}{T\-O\-P\-I\-C\-\_\-\-E\-X\-I\-S\-T\-S}, 
+\hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9caf71dcc7cb353ed43ce83a47c6db96476}{T\-O\-P\-I\-C\-\_\-\-N\-O\-T\-\_\-\-F\-O\-U\-N\-D}, 
+\hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9ca7e930d24ce3ae7e4881612220c30f801}{S\-U\-B\-S\-C\-R\-I\-B\-E\-R\-\_\-\-N\-O\-T\-\_\-\-F\-O\-U\-N\-D}, 
+\hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9caf925bd70ce652f03d12b8b0b359ba897}{T\-O\-P\-I\-C\-\_\-\-P\-E\-N\-D\-I\-N\-G}, 
+\\*
+\hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9caa1093c62e2d6da809e9118b0c5bc9221}{T\-O\-P\-I\-C\-\_\-\-S\-I\-Z\-E}
+ \}
+\begin{DoxyCompactList}\small\item\em Common error codes thrown as Exceptions by this module. \end{DoxyCompactList}\item 
+typedef void($\ast$ \hyperlink{class_msg_broker_a830cd79418898c03e6b144b1e47d68d1}{Notify\-Callback} )(void $\ast$subscriber, const char $\ast$topicname)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_msg_broker_acb4b2f7ac02b15cbd3b63442347c421e}{init} ()
+\begin{DoxyCompactList}\small\item\em Initializes the \hyperlink{class_msg_broker}{Msg\-Broker}. Creates the topics list if not already created. \end{DoxyCompactList}\item 
+static void \hyperlink{class_msg_broker_a17802a78defce9c29e23dd95d385b600}{deinit} ()
+\begin{DoxyCompactList}\small\item\em Deinitializes the \hyperlink{class_msg_broker}{Msg\-Broker}. Frees allocated resources and delete internal objects if not already done. \end{DoxyCompactList}\item 
+static \hyperlink{struct_msg_broker_1_1_topic}{Msg\-Broker\-::\-Topic} $\ast$ \hyperlink{class_msg_broker_adf353e158ae2e4511fe02dbaaf4f7c3b}{install\-Topic} (const char $\ast$name, uint32\-\_\-t datasize, \hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9c}{Msg\-Broker\-::\-Exception} $\ast$exception=0)
+\begin{DoxyCompactList}\small\item\em Installs a topic in the \hyperlink{class_msg_broker}{Msg\-Broker} by a name and its data size. \end{DoxyCompactList}\item 
+static void \hyperlink{class_msg_broker_a252f90534758da546b9f141401b15663}{remove\-Topic} (const char $\ast$topic\-\_\-name, \hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9c}{Msg\-Broker\-::\-Exception} $\ast$exception=0)
+\item 
+static void \hyperlink{class_msg_broker_a879ff94ddf4ddf4d7e5dfdeef9229cab}{remove\-Topic} (\hyperlink{struct_msg_broker_1_1_topic}{Topic} $\ast$t, \hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9c}{Msg\-Broker\-::\-Exception} $\ast$exception=0)
+\item 
+static \hyperlink{struct_msg_broker_1_1_observer}{Msg\-Broker\-::\-Observer} $\ast$ \hyperlink{class_msg_broker_af1896b563403cebee55d618c782651b4}{attach} (const char $\ast$topic\-\_\-name, void $\ast$subscriber, \hyperlink{class_msg_broker_a830cd79418898c03e6b144b1e47d68d1}{Notify\-Callback} notify, \hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9c}{Msg\-Broker\-::\-Exception} $\ast$exception=0)
+\begin{DoxyCompactList}\small\item\em Attaches a subscriber to topic by its topic name. \end{DoxyCompactList}\item 
+static void \hyperlink{class_msg_broker_ab82e348bba48890e5976a0e595baab38}{detach} (const char $\ast$topic\-\_\-name, void $\ast$subscriber, \hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9c}{Msg\-Broker\-::\-Exception} $\ast$exception=0)
+\begin{DoxyCompactList}\small\item\em Detaches a subscriber from a topic by its topic name. \end{DoxyCompactList}\item 
+static void \hyperlink{class_msg_broker_ac23ee5a60ef26ce2943c4d843f76ffef}{publish} (const char $\ast$topic\-\_\-name, void $\ast$data, uint32\-\_\-t datasize, \hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9c}{Msg\-Broker\-::\-Exception} $\ast$exception=0)
+\begin{DoxyCompactList}\small\item\em Publishes a topic with a topic name, a data pointer and its size. \end{DoxyCompactList}\item 
+static void \hyperlink{class_msg_broker_a2fc6d9772fc87ebeb224a5815695781d}{consumed} (const char $\ast$topic\-\_\-name, \hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9c}{Msg\-Broker\-::\-Exception} $\ast$exception=0)
+\begin{DoxyCompactList}\small\item\em Consumes a topic update. \end{DoxyCompactList}\item 
+static void $\ast$ \hyperlink{class_msg_broker_ab77a66ce4452b2af044d9c924b6b90a1}{get\-Topic\-Data} (const char $\ast$topic\-\_\-name, \hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9c}{Msg\-Broker\-::\-Exception} $\ast$exception=0)
+\begin{DoxyCompactList}\small\item\em Get latest topic update. \end{DoxyCompactList}\item 
+static uint32\-\_\-t \hyperlink{class_msg_broker_a1379f72013b54b16f78960bd577e814a}{get\-Topic\-Datasize} (const char $\ast$topic\-\_\-name, \hyperlink{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9c}{Msg\-Broker\-::\-Exception} $\ast$exception=0)
+\begin{DoxyCompactList}\small\item\em Get latest topic update datasize. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class provides publish/subscription infrastructure as interprocess communication mechanism. Topics are the exchanged data structures which by one side will be ready to be subscribed to, or updated by publish functions. It is a thread safe implementation, so it can be used in baremetal or R\-T\-O\-S-\/based applications. If a mutex is required on R\-T\-O\-S-\/based applications, def macro M\-U\-T\-E\-X\-\_\-\-L\-O\-C\-K and M\-U\-T\-E\-X\-\_\-\-U\-N\-L\-O\-C\-K can be adapted according with your needs. 
+
+Definition at line 45 of file Msg\-Broker.\-h.
+
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{class_msg_broker_a830cd79418898c03e6b144b1e47d68d1}{\index{Msg\-Broker@{Msg\-Broker}!Notify\-Callback@{Notify\-Callback}}
+\index{Notify\-Callback@{Notify\-Callback}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{Notify\-Callback}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ Msg\-Broker\-::\-Notify\-Callback)(void $\ast$subscriber, const char $\ast$topicname)}}\label{class_msg_broker_a830cd79418898c03e6b144b1e47d68d1}
+
+
+Definition at line 65 of file Msg\-Broker.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9c}{\index{Msg\-Broker@{Msg\-Broker}!Exception@{Exception}}
+\index{Exception@{Exception}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{Exception}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Msg\-Broker\-::\-Exception}}}\label{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9c}
+
+
+Common error codes thrown as Exceptions by this module. 
+
+\begin{Desc}
+\item[Enumerator\-: ]\par
+\begin{description}
+\index{N\-O\-\_\-\-E\-R\-R\-O\-R\-S@{N\-O\-\_\-\-E\-R\-R\-O\-R\-S}!Msg\-Broker@{Msg\-Broker}}\index{Msg\-Broker@{Msg\-Broker}!N\-O\-\_\-\-E\-R\-R\-O\-R\-S@{N\-O\-\_\-\-E\-R\-R\-O\-R\-S}}\item[{\em 
+\hypertarget{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9cab742e8ffb9ad14f8c6fd47cfac899141}{N\-O\-\_\-\-E\-R\-R\-O\-R\-S}\label{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9cab742e8ffb9ad14f8c6fd47cfac899141}
+}]No exceptions raised. \index{N\-U\-L\-L\-\_\-\-P\-O\-I\-N\-T\-E\-R@{N\-U\-L\-L\-\_\-\-P\-O\-I\-N\-T\-E\-R}!Msg\-Broker@{Msg\-Broker}}\index{Msg\-Broker@{Msg\-Broker}!N\-U\-L\-L\-\_\-\-P\-O\-I\-N\-T\-E\-R@{N\-U\-L\-L\-\_\-\-P\-O\-I\-N\-T\-E\-R}}\item[{\em 
+\hypertarget{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9caad59920430adf0bb0f7c95bf51475e23}{N\-U\-L\-L\-\_\-\-P\-O\-I\-N\-T\-E\-R}\label{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9caad59920430adf0bb0f7c95bf51475e23}
+}]Null pointer in operation. \index{D\-E\-I\-N\-I\-T@{D\-E\-I\-N\-I\-T}!Msg\-Broker@{Msg\-Broker}}\index{Msg\-Broker@{Msg\-Broker}!D\-E\-I\-N\-I\-T@{D\-E\-I\-N\-I\-T}}\item[{\em 
+\hypertarget{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9ca9d72afd7b38e8e78cc687b28196a32e2}{D\-E\-I\-N\-I\-T}\label{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9ca9d72afd7b38e8e78cc687b28196a32e2}
+}]\hyperlink{class_msg_broker}{Msg\-Broker} deinitialized. \index{O\-U\-T\-\_\-\-O\-F\-\_\-\-M\-E\-M\-O\-R\-Y@{O\-U\-T\-\_\-\-O\-F\-\_\-\-M\-E\-M\-O\-R\-Y}!Msg\-Broker@{Msg\-Broker}}\index{Msg\-Broker@{Msg\-Broker}!O\-U\-T\-\_\-\-O\-F\-\_\-\-M\-E\-M\-O\-R\-Y@{O\-U\-T\-\_\-\-O\-F\-\_\-\-M\-E\-M\-O\-R\-Y}}\item[{\em 
+\hypertarget{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9cac4968b9c0c7222025799479d3580ed88}{O\-U\-T\-\_\-\-O\-F\-\_\-\-M\-E\-M\-O\-R\-Y}\label{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9cac4968b9c0c7222025799479d3580ed88}
+}]No more dynamic memory. \index{T\-O\-P\-I\-C\-\_\-\-E\-X\-I\-S\-T\-S@{T\-O\-P\-I\-C\-\_\-\-E\-X\-I\-S\-T\-S}!Msg\-Broker@{Msg\-Broker}}\index{Msg\-Broker@{Msg\-Broker}!T\-O\-P\-I\-C\-\_\-\-E\-X\-I\-S\-T\-S@{T\-O\-P\-I\-C\-\_\-\-E\-X\-I\-S\-T\-S}}\item[{\em 
+\hypertarget{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9cad12f9a8ddb13dddb8cf7b99e9f6777da}{T\-O\-P\-I\-C\-\_\-\-E\-X\-I\-S\-T\-S}\label{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9cad12f9a8ddb13dddb8cf7b99e9f6777da}
+}]\hyperlink{struct_msg_broker_1_1_topic}{Topic} cannot be created, it already exists. \index{T\-O\-P\-I\-C\-\_\-\-N\-O\-T\-\_\-\-F\-O\-U\-N\-D@{T\-O\-P\-I\-C\-\_\-\-N\-O\-T\-\_\-\-F\-O\-U\-N\-D}!Msg\-Broker@{Msg\-Broker}}\index{Msg\-Broker@{Msg\-Broker}!T\-O\-P\-I\-C\-\_\-\-N\-O\-T\-\_\-\-F\-O\-U\-N\-D@{T\-O\-P\-I\-C\-\_\-\-N\-O\-T\-\_\-\-F\-O\-U\-N\-D}}\item[{\em 
+\hypertarget{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9caf71dcc7cb353ed43ce83a47c6db96476}{T\-O\-P\-I\-C\-\_\-\-N\-O\-T\-\_\-\-F\-O\-U\-N\-D}\label{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9caf71dcc7cb353ed43ce83a47c6db96476}
+}]\hyperlink{struct_msg_broker_1_1_topic}{Topic} doesn't exists. \index{S\-U\-B\-S\-C\-R\-I\-B\-E\-R\-\_\-\-N\-O\-T\-\_\-\-F\-O\-U\-N\-D@{S\-U\-B\-S\-C\-R\-I\-B\-E\-R\-\_\-\-N\-O\-T\-\_\-\-F\-O\-U\-N\-D}!Msg\-Broker@{Msg\-Broker}}\index{Msg\-Broker@{Msg\-Broker}!S\-U\-B\-S\-C\-R\-I\-B\-E\-R\-\_\-\-N\-O\-T\-\_\-\-F\-O\-U\-N\-D@{S\-U\-B\-S\-C\-R\-I\-B\-E\-R\-\_\-\-N\-O\-T\-\_\-\-F\-O\-U\-N\-D}}\item[{\em 
+\hypertarget{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9ca7e930d24ce3ae7e4881612220c30f801}{S\-U\-B\-S\-C\-R\-I\-B\-E\-R\-\_\-\-N\-O\-T\-\_\-\-F\-O\-U\-N\-D}\label{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9ca7e930d24ce3ae7e4881612220c30f801}
+}]Subscriber doesn't exists. \index{T\-O\-P\-I\-C\-\_\-\-P\-E\-N\-D\-I\-N\-G@{T\-O\-P\-I\-C\-\_\-\-P\-E\-N\-D\-I\-N\-G}!Msg\-Broker@{Msg\-Broker}}\index{Msg\-Broker@{Msg\-Broker}!T\-O\-P\-I\-C\-\_\-\-P\-E\-N\-D\-I\-N\-G@{T\-O\-P\-I\-C\-\_\-\-P\-E\-N\-D\-I\-N\-G}}\item[{\em 
+\hypertarget{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9caf925bd70ce652f03d12b8b0b359ba897}{T\-O\-P\-I\-C\-\_\-\-P\-E\-N\-D\-I\-N\-G}\label{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9caf925bd70ce652f03d12b8b0b359ba897}
+}]At least one subscriber has not yet consumed a topic update. \index{T\-O\-P\-I\-C\-\_\-\-S\-I\-Z\-E@{T\-O\-P\-I\-C\-\_\-\-S\-I\-Z\-E}!Msg\-Broker@{Msg\-Broker}}\index{Msg\-Broker@{Msg\-Broker}!T\-O\-P\-I\-C\-\_\-\-S\-I\-Z\-E@{T\-O\-P\-I\-C\-\_\-\-S\-I\-Z\-E}}\item[{\em 
+\hypertarget{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9caa1093c62e2d6da809e9118b0c5bc9221}{T\-O\-P\-I\-C\-\_\-\-S\-I\-Z\-E}\label{class_msg_broker_a29a59609f9ec3a1b8022f98f228f3c9caa1093c62e2d6da809e9118b0c5bc9221}
+}]\end{description}
+\end{Desc}
+
+
+
+Definition at line 50 of file Msg\-Broker.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_msg_broker_af1896b563403cebee55d618c782651b4}{\index{Msg\-Broker@{Msg\-Broker}!attach@{attach}}
+\index{attach@{attach}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{attach}]{\setlength{\rightskip}{0pt plus 5cm}Msg\-Broker\-::attach\mbox{[}static\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{topic\-\_\-name, }
+\item[{void $\ast$}]{subscriber, }
+\item[{{\bf Notify\-Callback}}]{notify, }
+\item[{{\bf Msg\-Broker\-::\-Exception} $\ast$}]{exception = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_msg_broker_af1896b563403cebee55d618c782651b4}
+
+
+Attaches a subscriber to topic by its topic name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \hyperlink{struct_msg_broker_1_1_topic}{Topic} name \\
+\hline
+{\em subscriber} & Subscriber object \\
+\hline
+{\em notify} & Notification callback function handled by the subscriber \\
+\hline
+{\em exception} & Int exception raised by the function. This param allow an exception mechanism where \char`\"{}\&ndash;exceptions\char`\"{} flags is disabled \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the allocated \hyperlink{struct_msg_broker_1_1_topic}{Topic} object 
+\end{DoxyReturn}
+
+
+Definition at line 206 of file Msg\-Broker.\-h.
+
+\hypertarget{class_msg_broker_a2fc6d9772fc87ebeb224a5815695781d}{\index{Msg\-Broker@{Msg\-Broker}!consumed@{consumed}}
+\index{consumed@{consumed}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{consumed}]{\setlength{\rightskip}{0pt plus 5cm}Msg\-Broker\-::consumed\mbox{[}static\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{topic\-\_\-name, }
+\item[{{\bf Msg\-Broker\-::\-Exception} $\ast$}]{exception = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_msg_broker_a2fc6d9772fc87ebeb224a5815695781d}
+
+
+Consumes a topic update. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em topic\-\_\-name} & \hyperlink{struct_msg_broker_1_1_topic}{Topic} name \\
+\hline
+{\em exception} & Exceptions raised by this function \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 303 of file Msg\-Broker.\-h.
+
+\hypertarget{class_msg_broker_a17802a78defce9c29e23dd95d385b600}{\index{Msg\-Broker@{Msg\-Broker}!deinit@{deinit}}
+\index{deinit@{deinit}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{deinit}]{\setlength{\rightskip}{0pt plus 5cm}Msg\-Broker\-::deinit\mbox{[}static\mbox{]} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_msg_broker_a17802a78defce9c29e23dd95d385b600}
+
+
+Deinitializes the \hyperlink{class_msg_broker}{Msg\-Broker}. Frees allocated resources and delete internal objects if not already done. 
+
+
+
+Definition at line 102 of file Msg\-Broker.\-h.
+
+\hypertarget{class_msg_broker_ab82e348bba48890e5976a0e595baab38}{\index{Msg\-Broker@{Msg\-Broker}!detach@{detach}}
+\index{detach@{detach}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{detach}]{\setlength{\rightskip}{0pt plus 5cm}Msg\-Broker\-::detach\mbox{[}static\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{topic\-\_\-name, }
+\item[{void $\ast$}]{subscriber, }
+\item[{{\bf Msg\-Broker\-::\-Exception} $\ast$}]{exception = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_msg_broker_ab82e348bba48890e5976a0e595baab38}
+
+
+Detaches a subscriber from a topic by its topic name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \hyperlink{struct_msg_broker_1_1_topic}{Topic} name \\
+\hline
+{\em subscriber} & Subscriber object to be detached \\
+\hline
+{\em exception} & Exceptions raised by this function \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 233 of file Msg\-Broker.\-h.
+
+\hypertarget{class_msg_broker_ab77a66ce4452b2af044d9c924b6b90a1}{\index{Msg\-Broker@{Msg\-Broker}!get\-Topic\-Data@{get\-Topic\-Data}}
+\index{get\-Topic\-Data@{get\-Topic\-Data}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{get\-Topic\-Data}]{\setlength{\rightskip}{0pt plus 5cm}Msg\-Broker\-::get\-Topic\-Data\mbox{[}static\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{topic\-\_\-name, }
+\item[{{\bf Msg\-Broker\-::\-Exception} $\ast$}]{exception = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_msg_broker_ab77a66ce4452b2af044d9c924b6b90a1}
+
+
+Get latest topic update. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em topic\-\_\-name} & \hyperlink{struct_msg_broker_1_1_topic}{Topic} name \\
+\hline
+{\em exception} & Exceptions raised by this function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to latest data update 
+\end{DoxyReturn}
+
+
+Definition at line 326 of file Msg\-Broker.\-h.
+
+\hypertarget{class_msg_broker_a1379f72013b54b16f78960bd577e814a}{\index{Msg\-Broker@{Msg\-Broker}!get\-Topic\-Datasize@{get\-Topic\-Datasize}}
+\index{get\-Topic\-Datasize@{get\-Topic\-Datasize}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{get\-Topic\-Datasize}]{\setlength{\rightskip}{0pt plus 5cm}Msg\-Broker\-::get\-Topic\-Datasize\mbox{[}static\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{topic\-\_\-name, }
+\item[{{\bf Msg\-Broker\-::\-Exception} $\ast$}]{exception = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_msg_broker_a1379f72013b54b16f78960bd577e814a}
+
+
+Get latest topic update datasize. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em topic\-\_\-name} & \hyperlink{struct_msg_broker_1_1_topic}{Topic} name \\
+\hline
+{\em exception} & Exceptions raised by this function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of topic datasize 
+\end{DoxyReturn}
+
+
+Definition at line 349 of file Msg\-Broker.\-h.
+
+\hypertarget{class_msg_broker_acb4b2f7ac02b15cbd3b63442347c421e}{\index{Msg\-Broker@{Msg\-Broker}!init@{init}}
+\index{init@{init}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}Msg\-Broker\-::init\mbox{[}static\mbox{]} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_msg_broker_acb4b2f7ac02b15cbd3b63442347c421e}
+
+
+Initializes the \hyperlink{class_msg_broker}{Msg\-Broker}. Creates the topics list if not already created. 
+
+
+
+Definition at line 91 of file Msg\-Broker.\-h.
+
+\hypertarget{class_msg_broker_adf353e158ae2e4511fe02dbaaf4f7c3b}{\index{Msg\-Broker@{Msg\-Broker}!install\-Topic@{install\-Topic}}
+\index{install\-Topic@{install\-Topic}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{install\-Topic}]{\setlength{\rightskip}{0pt plus 5cm}Msg\-Broker\-::install\-Topic\mbox{[}static\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{name, }
+\item[{uint32\-\_\-t}]{datasize, }
+\item[{{\bf Msg\-Broker\-::\-Exception} $\ast$}]{exception = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_msg_broker_adf353e158ae2e4511fe02dbaaf4f7c3b}
+
+
+Installs a topic in the \hyperlink{class_msg_broker}{Msg\-Broker} by a name and its data size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \hyperlink{struct_msg_broker_1_1_topic}{Topic} name \\
+\hline
+{\em datasize} & Size of data managed by this topic \\
+\hline
+{\em exception} & Int exception raised by the function. This param allow an exception mechanism where \char`\"{}\&ndash;exceptions\char`\"{} flags is disabled \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the allocated \hyperlink{struct_msg_broker_1_1_topic}{Topic} object 
+\end{DoxyReturn}
+
+
+Definition at line 130 of file Msg\-Broker.\-h.
+
+\hypertarget{class_msg_broker_ac23ee5a60ef26ce2943c4d843f76ffef}{\index{Msg\-Broker@{Msg\-Broker}!publish@{publish}}
+\index{publish@{publish}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{publish}]{\setlength{\rightskip}{0pt plus 5cm}Msg\-Broker\-::publish\mbox{[}static\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{topic\-\_\-name, }
+\item[{void $\ast$}]{data, }
+\item[{uint32\-\_\-t}]{datasize, }
+\item[{{\bf Msg\-Broker\-::\-Exception} $\ast$}]{exception = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_msg_broker_ac23ee5a60ef26ce2943c4d843f76ffef}
+
+
+Publishes a topic with a topic name, a data pointer and its size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & \hyperlink{struct_msg_broker_1_1_topic}{Topic} name \\
+\hline
+{\em data} & \hyperlink{struct_msg_broker_1_1_topic}{Topic} data updated \\
+\hline
+{\em datasize} & Size of topic to publish \\
+\hline
+{\em exception} & Exceptions raised by this function \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 264 of file Msg\-Broker.\-h.
+
+\hypertarget{class_msg_broker_a252f90534758da546b9f141401b15663}{\index{Msg\-Broker@{Msg\-Broker}!remove\-Topic@{remove\-Topic}}
+\index{remove\-Topic@{remove\-Topic}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{remove\-Topic}]{\setlength{\rightskip}{0pt plus 5cm}static void Msg\-Broker\-::remove\-Topic (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{topic\-\_\-name, }
+\item[{{\bf Msg\-Broker\-::\-Exception} $\ast$}]{exception = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_msg_broker_a252f90534758da546b9f141401b15663}
+
+
+Definition at line 162 of file Msg\-Broker.\-h.
+
+\hypertarget{class_msg_broker_a879ff94ddf4ddf4d7e5dfdeef9229cab}{\index{Msg\-Broker@{Msg\-Broker}!remove\-Topic@{remove\-Topic}}
+\index{remove\-Topic@{remove\-Topic}!MsgBroker@{Msg\-Broker}}
+\subsubsection[{remove\-Topic}]{\setlength{\rightskip}{0pt plus 5cm}static void Msg\-Broker\-::remove\-Topic (
+\begin{DoxyParamCaption}
+\item[{{\bf Topic} $\ast$}]{t, }
+\item[{{\bf Msg\-Broker\-::\-Exception} $\ast$}]{exception = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_msg_broker_a879ff94ddf4ddf4d7e5dfdeef9229cab}
+
+
+Definition at line 186 of file Msg\-Broker.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_msg_broker_8h}{Msg\-Broker.\-h}\item 
+\hyperlink{_msg_broker_8cpp}{Msg\-Broker.\-cpp}\end{DoxyCompactItemize}

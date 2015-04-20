@@ -1,0 +1,56 @@
+\hypertarget{_msg_broker_8h}{\section{Msg\-Broker.\-h File Reference}
+\label{_msg_broker_8h}\index{Msg\-Broker.\-h@{Msg\-Broker.\-h}}
+}
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}List.\-h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_msg_broker}{Msg\-Broker}
+\begin{DoxyCompactList}\small\item\em This class provides publish/subscription infrastructure as interprocess communication mechanism. Topics are the exchanged data structures which by one side will be ready to be subscribed to, or updated by publish functions. It is a thread safe implementation, so it can be used in baremetal or R\-T\-O\-S-\/based applications. If a mutex is required on R\-T\-O\-S-\/based applications, def macro M\-U\-T\-E\-X\-\_\-\-L\-O\-C\-K and M\-U\-T\-E\-X\-\_\-\-U\-N\-L\-O\-C\-K can be adapted according with your needs. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_msg_broker_1_1_observer}{Msg\-Broker\-::\-Observer}
+\begin{DoxyCompactList}\small\item\em \hyperlink{struct_msg_broker_1_1_observer}{Observer} structure is formed by a handler and a notification callback. Subscriber objects attached to topic updates, will be registered in the \hyperlink{class_msg_broker}{Msg\-Broker} as \hyperlink{struct_msg_broker_1_1_observer}{Observer} structures. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_msg_broker_1_1_topic}{Msg\-Broker\-::\-Topic}
+\begin{DoxyCompactList}\small\item\em Is the topic structure, formed by a list of observers, a topic name, pointer to the latest data update, data size and count of notification consumption. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_msg_broker_8h_a6e738674a58616274e5ba0ae950d5cab}{M\-S\-G\-B\-R\-O\-K\-E\-R\-\_\-\-R\-E\-L\-E\-A\-S\-E}~\char`\"{}1.\-0.\-20150420001\char`\"{}
+\item 
+\#define \hyperlink{_msg_broker_8h_a4fd9bb2626ea84171715a4bfc8d34f51}{M\-U\-T\-E\-X\-\_\-\-L\-O\-C\-K}()
+\item 
+\#define \hyperlink{_msg_broker_8h_a39fb167f02a67890036f81b75c414f07}{M\-U\-T\-E\-X\-\_\-\-U\-N\-L\-O\-C\-K}()
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{_msg_broker_8h_a6e738674a58616274e5ba0ae950d5cab}{\index{Msg\-Broker.\-h@{Msg\-Broker.\-h}!M\-S\-G\-B\-R\-O\-K\-E\-R\-\_\-\-R\-E\-L\-E\-A\-S\-E@{M\-S\-G\-B\-R\-O\-K\-E\-R\-\_\-\-R\-E\-L\-E\-A\-S\-E}}
+\index{M\-S\-G\-B\-R\-O\-K\-E\-R\-\_\-\-R\-E\-L\-E\-A\-S\-E@{M\-S\-G\-B\-R\-O\-K\-E\-R\-\_\-\-R\-E\-L\-E\-A\-S\-E}!MsgBroker.h@{Msg\-Broker.\-h}}
+\subsubsection[{M\-S\-G\-B\-R\-O\-K\-E\-R\-\_\-\-R\-E\-L\-E\-A\-S\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-S\-G\-B\-R\-O\-K\-E\-R\-\_\-\-R\-E\-L\-E\-A\-S\-E~\char`\"{}1.\-0.\-20150420001\char`\"{}}}\label{_msg_broker_8h_a6e738674a58616274e5ba0ae950d5cab}
+
+
+Definition at line 17 of file Msg\-Broker.\-h.
+
+\hypertarget{_msg_broker_8h_a4fd9bb2626ea84171715a4bfc8d34f51}{\index{Msg\-Broker.\-h@{Msg\-Broker.\-h}!M\-U\-T\-E\-X\-\_\-\-L\-O\-C\-K@{M\-U\-T\-E\-X\-\_\-\-L\-O\-C\-K}}
+\index{M\-U\-T\-E\-X\-\_\-\-L\-O\-C\-K@{M\-U\-T\-E\-X\-\_\-\-L\-O\-C\-K}!MsgBroker.h@{Msg\-Broker.\-h}}
+\subsubsection[{M\-U\-T\-E\-X\-\_\-\-L\-O\-C\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-U\-T\-E\-X\-\_\-\-L\-O\-C\-K(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{_msg_broker_8h_a4fd9bb2626ea84171715a4bfc8d34f51}
+Add here your porting code for R\-T\-O\-S-\/based applications 
+
+Definition at line 25 of file Msg\-Broker.\-h.
+
+\hypertarget{_msg_broker_8h_a39fb167f02a67890036f81b75c414f07}{\index{Msg\-Broker.\-h@{Msg\-Broker.\-h}!M\-U\-T\-E\-X\-\_\-\-U\-N\-L\-O\-C\-K@{M\-U\-T\-E\-X\-\_\-\-U\-N\-L\-O\-C\-K}}
+\index{M\-U\-T\-E\-X\-\_\-\-U\-N\-L\-O\-C\-K@{M\-U\-T\-E\-X\-\_\-\-U\-N\-L\-O\-C\-K}!MsgBroker.h@{Msg\-Broker.\-h}}
+\subsubsection[{M\-U\-T\-E\-X\-\_\-\-U\-N\-L\-O\-C\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-U\-T\-E\-X\-\_\-\-U\-N\-L\-O\-C\-K(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{_msg_broker_8h_a39fb167f02a67890036f81b75c414f07}
+
+
+Definition at line 26 of file Msg\-Broker.\-h.
+

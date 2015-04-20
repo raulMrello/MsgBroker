@@ -1,0 +1,95 @@
+\hypertarget{struct_msg_broker_1_1_topic}{\section{Msg\-Broker\-:\-:Topic Struct Reference}
+\label{struct_msg_broker_1_1_topic}\index{Msg\-Broker\-::\-Topic@{Msg\-Broker\-::\-Topic}}
+}
+
+
+Is the topic structure, formed by a list of observers, a topic name, pointer to the latest data update, data size and count of notification consumption.  
+
+
+
+
+{\ttfamily \#include $<$Msg\-Broker.\-h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_list}{List}$<$ \hyperlink{struct_msg_broker_1_1_observer}{Observer} $>$ $\ast$ \hyperlink{struct_msg_broker_1_1_topic_a6109a82a783cc81a889a6ddef5af5ecc}{observer\-\_\-list}
+\begin{DoxyCompactList}\small\item\em list of observer objects \end{DoxyCompactList}\item 
+const char $\ast$ \hyperlink{struct_msg_broker_1_1_topic_a6cdd55155171ef025ab20f3a7c1b5091}{name}
+\begin{DoxyCompactList}\small\item\em topic name \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{struct_msg_broker_1_1_topic_ab3cecf94841562b7dcd62c36f3ee3be6}{data}
+\begin{DoxyCompactList}\small\item\em pointer to the latest data update \end{DoxyCompactList}\item 
+uint32\-\_\-t \hyperlink{struct_msg_broker_1_1_topic_a8cc287ab37bc41fd6b671eacdcf7393a}{datasize}
+\begin{DoxyCompactList}\small\item\em data size of the data attached to the topic \end{DoxyCompactList}\item 
+uint32\-\_\-t \hyperlink{struct_msg_broker_1_1_topic_a939161befbc15201a30852158dc22271}{count}
+\begin{DoxyCompactList}\small\item\em number of observers notified and pendind to mark the \char`\"{}consumed\char`\"{} topic signal \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Is the topic structure, formed by a list of observers, a topic name, pointer to the latest data update, data size and count of notification consumption. 
+
+Definition at line 80 of file Msg\-Broker.\-h.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{struct_msg_broker_1_1_topic_a939161befbc15201a30852158dc22271}{\index{Msg\-Broker\-::\-Topic@{Msg\-Broker\-::\-Topic}!count@{count}}
+\index{count@{count}!MsgBroker::Topic@{Msg\-Broker\-::\-Topic}}
+\subsubsection[{count}]{\setlength{\rightskip}{0pt plus 5cm}uint32\-\_\-t Msg\-Broker\-::\-Topic\-::count}}\label{struct_msg_broker_1_1_topic_a939161befbc15201a30852158dc22271}
+
+
+number of observers notified and pendind to mark the \char`\"{}consumed\char`\"{} topic signal 
+
+
+
+Definition at line 85 of file Msg\-Broker.\-h.
+
+\hypertarget{struct_msg_broker_1_1_topic_ab3cecf94841562b7dcd62c36f3ee3be6}{\index{Msg\-Broker\-::\-Topic@{Msg\-Broker\-::\-Topic}!data@{data}}
+\index{data@{data}!MsgBroker::Topic@{Msg\-Broker\-::\-Topic}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ Msg\-Broker\-::\-Topic\-::data}}\label{struct_msg_broker_1_1_topic_ab3cecf94841562b7dcd62c36f3ee3be6}
+
+
+pointer to the latest data update 
+
+
+
+Definition at line 83 of file Msg\-Broker.\-h.
+
+\hypertarget{struct_msg_broker_1_1_topic_a8cc287ab37bc41fd6b671eacdcf7393a}{\index{Msg\-Broker\-::\-Topic@{Msg\-Broker\-::\-Topic}!datasize@{datasize}}
+\index{datasize@{datasize}!MsgBroker::Topic@{Msg\-Broker\-::\-Topic}}
+\subsubsection[{datasize}]{\setlength{\rightskip}{0pt plus 5cm}uint32\-\_\-t Msg\-Broker\-::\-Topic\-::datasize}}\label{struct_msg_broker_1_1_topic_a8cc287ab37bc41fd6b671eacdcf7393a}
+
+
+data size of the data attached to the topic 
+
+
+
+Definition at line 84 of file Msg\-Broker.\-h.
+
+\hypertarget{struct_msg_broker_1_1_topic_a6cdd55155171ef025ab20f3a7c1b5091}{\index{Msg\-Broker\-::\-Topic@{Msg\-Broker\-::\-Topic}!name@{name}}
+\index{name@{name}!MsgBroker::Topic@{Msg\-Broker\-::\-Topic}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ Msg\-Broker\-::\-Topic\-::name}}\label{struct_msg_broker_1_1_topic_a6cdd55155171ef025ab20f3a7c1b5091}
+
+
+topic name 
+
+
+
+Definition at line 82 of file Msg\-Broker.\-h.
+
+\hypertarget{struct_msg_broker_1_1_topic_a6109a82a783cc81a889a6ddef5af5ecc}{\index{Msg\-Broker\-::\-Topic@{Msg\-Broker\-::\-Topic}!observer\-\_\-list@{observer\-\_\-list}}
+\index{observer\-\_\-list@{observer\-\_\-list}!MsgBroker::Topic@{Msg\-Broker\-::\-Topic}}
+\subsubsection[{observer\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}{\bf List}$<${\bf Observer} $>$$\ast$ Msg\-Broker\-::\-Topic\-::observer\-\_\-list}}\label{struct_msg_broker_1_1_topic_a6109a82a783cc81a889a6ddef5af5ecc}
+
+
+list of observer objects 
+
+
+
+Definition at line 81 of file Msg\-Broker.\-h.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_msg_broker_8h}{Msg\-Broker.\-h}\end{DoxyCompactItemize}
