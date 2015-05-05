@@ -17,12 +17,12 @@ struct gps_data_t{
 };
 
 /** CMSIS Threads */
-Thread *producer;
+Thread *publisher;
 Thread *observer;
 
 /** prototypes of producer/consumer tasks */
-void producer_task(void*);
-void consumer_task(void*);
+void publisher_task(void*);
+void observer_task(void*);
 
 /** main program*/
 int main(void){
@@ -35,8 +35,8 @@ int main(void){
 	osKernelStart();
 	
 	/** CMSIS Tasks creations */
-	observer = new Thread(&consumer_task);
-	publisher = new Thread(&producer_task);
+	observer = new Thread(&observer_task);
+	publisher = new Thread(&publisher_task);
 	
 	/** loop forever */
 	while(1){
@@ -44,7 +44,7 @@ int main(void){
 }
 
 /** Producer task */
-int producer_task(void *arg){
+int publisher_task(void *arg){
 	// gps data
 	gps_data_t gps_data;
 	MsgBroker::Exception e;
@@ -59,14 +59,14 @@ int producer_task(void *arg){
 	}
 }
 
-/** Consumer topic notification callback */
+/** Observer topic notification callback */
 void gps_updated(void *arg, const char * topicname){
 	// on topic update sets signal flag 1.
-	consumer->signal_set(1);
+	observer->signal_set(1);
 }
 
-/** Consumer task */
-int consumer_task(void *arg){
+/** Observer task */
+int observer_task(void *arg){
 	MsgBroker::Exception e;
 	// attaches to "/gps" topic updates. On each update, function "gps_updated" will be invoked.
 	MsgBroker::attach("/gps", 0, &gps_updated, &e);
@@ -77,7 +77,7 @@ int consumer_task(void *arg){
 		// if flag set
 		if(oe.status == osEventSignal && (oe.value.signals & 1) != 0){	
 			// clear flag 1
-			consumer->signal_clr(1);
+			observer->signal_clr(1);
 			// get updated gps data
 			gps_data_t *data = (gps_data_t *)MsgBroker::getTopicData("/gps", &e);
 			// do something with gps data
