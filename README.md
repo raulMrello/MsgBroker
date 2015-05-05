@@ -5,11 +5,14 @@ MsgBroker library provides an extremely simple mechanism to add publish/subscrip
 Publish/subscribe mechanisms is formed by:
 - Topics: messages exchanged between software agents: publishers and subscribers.
 - Publishers: agents which update data topics and notify those topic updates.
-- Subscribers: agents which attach to topic updates and act according their new values each time the get updated.
+- Subscribers: agents which attach to topic updates and act according their new values each time they are updated.
 
 Example of use:
 
 ```
+
+#include "MsgBroker.h"
+
 /** GPS topic data structure */
 struct gps_data_t{
 	float lat;
@@ -20,7 +23,7 @@ struct gps_data_t{
 Thread *publisher;
 Thread *observer;
 
-/** prototypes of producer/consumer tasks */
+/** prototypes of publisher/observer tasks */
 void publisher_task(void*);
 void observer_task(void*);
 
@@ -29,21 +32,23 @@ int main(void){
 	/** Init Message Broker and install topics */
 	MsgBroker::init();
 	MsgBroker::installTopic("/gps", sizeof(gps_data_t));
-	
+
 	/** CMSIS-RTOS initialization */
 	osKernelInitialize();
-	osKernelStart();
 	
 	/** CMSIS Tasks creations */
 	observer = new Thread(&observer_task);
 	publisher = new Thread(&publisher_task);
+	
+	/** CMSIS-RTOS startup */
+	osKernelStart();
 	
 	/** loop forever */
 	while(1){
 	}
 }
 
-/** Producer task */
+/** Publisher task */
 int publisher_task(void *arg){
 	// gps data
 	gps_data_t gps_data;
@@ -61,15 +66,19 @@ int publisher_task(void *arg){
 
 /** Observer topic notification callback */
 void gps_updated(void *arg, const char * topicname){
-	// on topic update sets signal flag 1.
-	observer->signal_set(1);
+	//checks that topic update is relative to "/gps" topic
+	if(strcmp(topicname, "/gps") == 0){
+		Thread * th = (Thread*)arg;
+		// sets signal flag 1.
+		th->signal_set(1);
+	}
 }
 
 /** Observer task */
 int observer_task(void *arg){
 	MsgBroker::Exception e;
 	// attaches to "/gps" topic updates. On each update, function "gps_updated" will be invoked.
-	MsgBroker::attach("/gps", 0, &gps_updated, &e);
+	MsgBroker::attach("/gps", observer, &gps_updated, &e);
 	
 	while(1){
 		// Wait for signal flag 1 ... 
